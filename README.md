@@ -1,6 +1,6 @@
 # dbt-sigma-report
 
-Compose [Sigma reports](https://help.sigmacomputing.com/docs/manage-reports-as-code) from dbt macros instead of hand-writing Sigma's JSON. A report is a dbt model: it can `ref()` your dbt models and `source()`s, it can read the tables of your [Sigma data models](https://github.com/Matts52/dbt-sigma-data-models), it is reviewed like the rest of your project, and its compiled spec lands in `manifest.json` on `dbt parse`.
+Compose [Sigma reports](https://help.sigmacomputing.com/docs/manage-reports-as-code) from dbt macros instead of hand-writing Sigma's JSON. A report is a dbt model: it can `ref()` your dbt models and `source()`s, it can read the tables of your [Sigma data models](https://github.com/sigmacomputing/dbt-sigma-data-model), it is reviewed like the rest of your project, and its compiled spec lands in `manifest.json` on `dbt parse`.
 
 ```sql
 -- models/sigma_sales_dashboard.sql
@@ -30,7 +30,7 @@ The package never calls Sigma. It composes JSON at parse time (no warehouse conn
 
 ## Reports are not workbooks
 
-A Sigma **report** is the paginated-document object: fixed pages (US Letter, A4, ...), elements placed at absolute pixel positions, headers and footers that repeat on every page, built for exporting and scheduling. A **workbook** is the interactive canvas (24-column grid, controls, tabs). The two have different code representations (`POST /v2/reports` with `kind: "report"` versus `POST /v2/workbooks`), and this package targets reports. If you want workbooks, see its sibling [`dbt-sigma-workbook`](https://github.com/Matts52/dbt-sigma-workbook); the macro vocabulary is deliberately similar.
+A Sigma **report** is the paginated-document object: fixed pages (US Letter, A4, ...), elements placed at absolute pixel positions, headers and footers that repeat on every page, built for exporting and scheduling. A **workbook** is the interactive canvas (24-column grid, controls, tabs). The two have different code representations (`POST /v2/reports` with `kind: "report"` versus `POST /v2/workbooks`), and this package targets reports. If you want workbooks, see its sibling [`dbt-sigma-workbook`](https://github.com/sigmacomputing/dbt-sigma-workbook); the macro vocabulary is deliberately similar.
 
 Because a report is paginated, the package lays elements out for you with a simple vertical flow (title, KPI band, charts, table) and starts a new page when one fills up. See [Layout](#layout).
 
@@ -46,11 +46,11 @@ Not on the dbt Package Hub yet; install from git in `packages.yml`:
 
 ```yaml
 packages:
-  - git: "https://github.com/mattsenicksigma/dbt-sigma-report.git"
+  - git: "https://github.com/sigmacomputing/dbt-sigma-report.git"
     revision: v1.0.0          # a release tag; pin it for reproducible builds
 ```
 
-Then `dbt deps`. To read from Sigma data model tables, also install [`Matts52/dbt-sigma-data-models`](https://github.com/Matts52/dbt-sigma-data-models) (optional).
+Then `dbt deps`. To read from Sigma data model tables, also install [`sigmacomputing/dbt-sigma-data-model`](https://github.com/sigmacomputing/dbt-sigma-data-model) (optional).
 
 ## Setup
 
